@@ -1,0 +1,33 @@
+name: "Jira ticket creation"
+description: "Creates a Jira ticket base on the input of a previous action"
+inputs:
+    JIRA_USER:
+        description: "Github secret for the JIRA user email for external access"
+        required: true
+    JIRA_PASSWORD:
+        description: "Github secret for the JIRA API token for external access"
+        required: true
+    JIRA_PROJECT:
+        description: "The project key for Jira"
+        required: true
+    JIRA_URI:
+        description: "The Jira URI used for the REST API to make the requests to"
+        required: true
+    ISSUE_TYPE:
+      description: "The type of the issue to be used while searching for existing issues. This is needed in order to avoid duplicating already raised issues"
+      required: true
+    PULL_REQUEST:
+      description: "pull request number"
+      required: true
+    GH_TAG:
+      description: "github tag"
+      required: true
+      default: '';
+    SLACK_WEBHOOK:
+      description: "slack webhook"
+      required: true
+
+
+runs:
+    using: "docker"
+    image: "Dockerfile"

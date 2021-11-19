@@ -1,0 +1,16 @@
+{
+    "name": "jira-integration",
+    "version": "1.0.0",
+    "description": "Integrate Github and Jira in order to create issues in case of a vulnerability found",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@actions/core": "1.6.0",
+        "@actions/github": "^5.0.0",
+        "got": "^11.8.2"
+    }
+}
