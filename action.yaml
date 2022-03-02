@@ -9,14 +9,19 @@ inputs:
         required: true
     JIRA_PROJECT:
         description: "The project key for Jira"
-        required: true
+        required: false
+        default: 'DEPLOY'
     JIRA_URI:
         description: "The Jira URI used for the REST API to make the requests to"
         required: true
     ISSUE_TYPE:
       description: "The type of the issue to be used while searching for existing issues. This is needed in order to avoid duplicating already raised issues"
+      required: false
+      default: "Task (Capex)"
+    GH_TOKEN:
+      description: "auth token"
       required: true
-    PULL_REQUEST:
+    GH_PR_NUMBER:
       description: "pull request number"
       required: true
     GH_TAG:
