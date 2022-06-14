@@ -35,7 +35,7 @@ inputs:
       description: "header"
       required: true
     DEPLOYS_BOT_HEADER_VALUE:
-      description: "header value"
+      description: "header value x"
       required: true
 
 
