@@ -5,11 +5,9 @@ on:
     branches:
       - master
     paths-ignore:
-      - 'docs/**'
       - 'README.md'
       - '.github/workflows/release.yaml'
       - '.github/PULL_REQUEST_TEMPLATE.md'
-      - '.github/CODEOWNERS'
 
 jobs:
   release-on-push:
