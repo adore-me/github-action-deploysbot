@@ -9,7 +9,10 @@ const JIRA_CONFIG = {
 
   JIRA_ISSUE_CREATION_ENDPOINT: 'rest/api/2/issue',
   JIRA_UPDATE_ISSUE_DESCRIPTION_ENDPOINT: 'rest/api/2/issue/',
-  JIRA_LINK_ISSUES_ENDPOINT: 'rest/api/2/issueLink'
+  JIRA_LINK_ISSUES_ENDPOINT: 'rest/api/2/issueLink',
+
+  DEPLOYS_BOT_HEADER: process.env.DEPLOYS_BOT_HEADER || core.getInput('DEPLOYS_BOT_HEADER'),
+  DEPLOYS_BOT_HEADER_VALUE: process.env.DEPLOYS_BOT_HEADER_VALUE || core.getInput('DEPLOYS_BOT_HEADER_VALUE')
 };
 
 const GITHUB_CONFIG = {
