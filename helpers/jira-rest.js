@@ -7,7 +7,7 @@ class Jira {
     this.client = got.extend({
       headers: {
         'Authorization': `Basic ${config.AUTH_TOKEN}`,
-        [`${config.JIRA_CONFIG.DEPLOYS_BOT_HEADER}`]: config.JIRA_CONFIG.DEPLOYS_BOT_HEADER_VALUE
+        [`${config.JIRA_CONFIG.HEADER}`]: config.JIRA_CONFIG.HEADER_VALUE
       },
 
       prefixUrl: config.JIRA_CONFIG.JIRA_URI,
