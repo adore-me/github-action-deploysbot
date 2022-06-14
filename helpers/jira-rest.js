@@ -4,16 +4,15 @@ const utils = require('./utils');
 
 class Jira {
   constructor() {
-    const baseClient = got.extend({
+    this.client = got.extend({
       headers: {
-        'Authorization': "Basic " + config.AUTH_TOKEN
+        'Authorization': `Basic ${config.AUTH_TOKEN}`,
+        [`${config.JIRA_CONFIG.DEPLOYS_BOT_HEADER}`]: config.JIRA_CONFIG.DEPLOYS_BOT_HEADER_VALUE
       },
 
       prefixUrl: config.JIRA_CONFIG.JIRA_URI,
       responseType: 'json'
     });
-
-    this.client = baseClient;
   }
 
   async createIssue(prDetails) {
