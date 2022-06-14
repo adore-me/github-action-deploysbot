@@ -31,6 +31,12 @@ inputs:
     SLACK_WEBHOOK:
       description: "slack webhook"
       required: true
+    DEPLOYS_BOT_HEADER:
+      description: "header"
+      required: true
+    DEPLOYS_BOT_HEADER_VALUE:
+      description: "header value"
+      required: true
 
 
 runs:
