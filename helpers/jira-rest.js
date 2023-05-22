@@ -6,8 +6,7 @@ class Jira {
   constructor() {
     this.client = got.extend({
       headers: {
-        'Authorization': `Basic ${config.AUTH_TOKEN}`,
-        [`${config.JIRA_CONFIG.HEADER}`]: config.JIRA_CONFIG.HEADER_VALUE
+        'Authorization': `Basic ${config.AUTH_TOKEN}`
       },
 
       prefixUrl: config.JIRA_CONFIG.JIRA_URI,
@@ -24,8 +23,22 @@ class Jira {
           key: config.JIRA_CONFIG.JIRA_PROJECT
         },
         summary: summaryField,
-        description: "to be updated",
-        customfield_10508: {
+        description: {
+          "content": [
+            {
+              "content": [
+                {
+                  "text": "to be updated",
+                  "type": "text"
+                }
+              ],
+              "type": "paragraph"
+            }
+          ],
+          "type": "doc",
+          "version": 1
+        },
+        customfield_10035: {
           value: "Unassigned"
         },
         issuetype: {
@@ -53,31 +66,254 @@ class Jira {
 
 
   async updateIssueDescription(releaseTicket, prDetails, reviewers, commits) {
-    let approvers = utils.getUniqueApprovers(reviewers);
+    let approvers = [...new Set(utils.getUniqueApprovers(reviewers) || [])];
     const gitTag = config.GITHUB_CONFIG.GH_TAG;
 
     let updateIssueDescriptionPayload = {
       fields: {
-        description:
-          `\r\nRepository [${prDetails.head.repo.name.toUpperCase()}|https://github.com/adore-me/${prDetails.head.repo.name}]` +
-          `\r\nNew version: [PR-${prDetails.number}: ${prDetails.title}|https://github.com/adore-me/${prDetails.head.repo.name}/pull/${prDetails.number}]` +
-          `\r\nTag: [${gitTag}|https://github.com/adore-me/${prDetails.head.repo.name}/releases/tag/${gitTag}]` +
-          `\r\nQuay image: prod-${gitTag}` +
-          `\r\n\n\n` +
-          `\r\nUser info: ` +
-          `\r\n- Opened by: ${prDetails.user.login}` +
-          `\r\n- Approved by:  ${approvers.join(", ")}` +
-          `\r\n- Merged by: ${prDetails.merged_by.login}` +
-          `\r\n\n\n` +
-          `\r\nPR info: ` +
-          `\r\n- number of changed files: ${prDetails.changed_files}` +
-          `\r\n- number of commits: ${prDetails.commits}` +
-          `\r\n- additions: {color:#8eb021}+${prDetails.additions}{color}` +
-          `\r\n- deletions: {color:#de350b}-${prDetails.deletions}{color}` +
-          `\r\n\n\nCommits:` +
-          `{code:java}` +
-          `\r\n${commits.join("\r\n")}` +
-          `{code}`
+        "description": {
+          "version": 1,
+          "type": "doc",
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Repository "
+                },
+                {
+                  "type": "text",
+                  "text": prDetails.head.repo.name.toUpperCase(),
+                  "marks": [
+                    {
+                      "type": "link",
+                      "attrs": {
+                        "href": `https://github.com/adore-me/${prDetails.head.repo.name}`
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "hardBreak"
+                },
+                {
+                  "type": "text",
+                  "text": "New version: "
+                },
+                {
+                  "type": "text",
+                  "text": `PR-${prDetails.number}: ${prDetails.title}`,
+                  "marks": [
+                    {
+                      "type": "link",
+                      "attrs": {
+                        "href": `https://github.com/adore-me/${prDetails.head.repo.name}/pull/${prDetails.number}`
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "hardBreak"
+                },
+                {
+                  "type": "text",
+                  "text": "Tag: "
+                },
+                {
+                  "type": "text",
+                  "text": gitTag,
+                  "marks": [
+                    {
+                      "type": "link",
+                      "attrs": {
+                        "href": `https://github.com/adore-me/${prDetails.head.repo.name}/releases/tag/${gitTag}`
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "hardBreak"
+                },
+                {
+                  "type": "text",
+                  "text": `Quay image: ${gitTag}`
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "User info: "
+                }
+              ]
+            },
+            {
+              "type": "bulletList",
+              "content": [
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": `Opened by: ${prDetails.user.login}`
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": `Approved by: ${approvers.join(", ")}`
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": `Merged by: ${prDetails.merged_by.login}`
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "PR info: "
+                }
+              ]
+            },
+            {
+              "type": "bulletList",
+              "content": [
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": `number of changed files: ${prDetails.changed_files}`
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": `number of commits: ${prDetails.commits}`
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "additions: "
+                        },
+                        {
+                          "type": "text",
+                          "text": `+ ${prDetails.additions}`,
+                          "marks": [
+                            {
+                              "type": "textColor",
+                              "attrs": {
+                                "color": "#8eb021"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "listItem",
+                  "content": [
+                    {
+                      "type": "paragraph",
+                      "content": [
+                        {
+                          "type": "text",
+                          "text": "deletions: "
+                        },
+                        {
+                          "type": "text",
+                          "text": `- ${prDetails.deletions}`,
+                          "marks": [
+                            {
+                              "type": "textColor",
+                              "attrs": {
+                                "color": "#de350b"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Commits:"
+                }
+              ]
+            },
+            {
+              "type": "codeBlock",
+              "attrs": {
+                "language": "java"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": commits.join("\r\n")
+                }
+              ]
+            }
+          ]
+        },
       }
     };
 
