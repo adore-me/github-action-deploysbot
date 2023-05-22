@@ -7,9 +7,9 @@ const JIRA_CONFIG = {
   JIRA_URI: process.env.JIRA_URI || core.getInput('JIRA_URI'),
   ISSUE_TYPE: process.env.ISSUE_TYPE || core.getInput('ISSUE_TYPE'),
 
-  JIRA_ISSUE_CREATION_ENDPOINT: 'rest/api/2/issue',
-  JIRA_UPDATE_ISSUE_DESCRIPTION_ENDPOINT: 'rest/api/2/issue/',
-  JIRA_LINK_ISSUES_ENDPOINT: 'rest/api/2/issueLink',
+  JIRA_ISSUE_CREATION_ENDPOINT:           'rest/api/3/issue',
+  JIRA_UPDATE_ISSUE_DESCRIPTION_ENDPOINT: 'rest/api/3/issue/',
+  JIRA_LINK_ISSUES_ENDPOINT:              'rest/api/3/issueLink',
 
   HEADER: process.env.DEPLOYSBOT_HEADER || core.getInput('DEPLOYSBOT_HEADER'),
   HEADER_VALUE: process.env.DEPLOYSBOT_HEADER_VALUE || core.getInput('DEPLOYSBOT_HEADER_VALUE')

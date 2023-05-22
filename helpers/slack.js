@@ -3,7 +3,7 @@ const config = require('../config/config')
 const utils = require('./utils');
 
 const sendNotification = async function (releaseTicket, prDetails, reviewers, issues) {
-    let approvers = utils.getUniqueApprovers(reviewers);
+    let approvers = [...new Set(utils.getUniqueApprovers(reviewers) || [])];
     let approved_by = approvers.length ? `*Approved by:* ${approvers.join(', ')}`: '';
 
     let foundIssues = '';
