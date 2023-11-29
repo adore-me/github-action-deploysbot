@@ -9,7 +9,7 @@ const sendNotification = async function (releaseTicket, prDetails, reviewers, is
     let foundIssues = '';
     if(issues.length) {
         let formattedIssues = issues.map(function (element){
-            return `<https://jira.adoreme.com/browse/${element}|${element}>`;
+            return `<https://adoreme.atlassian.net/browse/${element}|${element}>`;
         });
         foundIssues = `\nRelated tickets: *${formattedIssues.join(", ")}*`;
     }
@@ -19,9 +19,9 @@ const sendNotification = async function (releaseTicket, prDetails, reviewers, is
             {
                 text: {
                     text: 
-                        `*<https://github.com/adore-me/${prDetails.head.repo.name}|${prDetails.head.repo.name.toUpperCase()}>* is now deployed with ` +
-                        `*<https://github.com/adore-me/${prDetails.head.repo.name}/pull/${prDetails.number}|PR-${prDetails.number}: ${prDetails.title}>* :rocket: \n\n` +
-                        `See release details: <https://jira.adoreme.com/browse/${releaseTicket}|${releaseTicket}>`,
+                        `*<https://github.com/adore-me/${prDetails.head.repo.name}|${prDetails.head.repo.name.toUpperCase()}>* :_loader::_loader: ` +
+                        `*<https://github.com/adore-me/${prDetails.head.repo.name}/pull/${prDetails.number}|PR-${prDetails.number}: ${prDetails.title}>* \n\n` +
+                        `See release details: <https://adoreme.atlassian.net/browse/${releaseTicket}|${releaseTicket}>`,
                     type: "mrkdwn"
                 },
                 type: "section"
