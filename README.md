@@ -1,6 +1,7 @@
 # github-action-deploysbot
 Whenever a pull request is closed, a jira issue is created, updated with pr details, then a slack notification will be fired;
 
+
 example usage: 
 ```
    - name: do voodoo
