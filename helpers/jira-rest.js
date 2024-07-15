@@ -38,9 +38,7 @@ class Jira {
           "type": "doc",
           "version": 1
         },
-        customfield_10035: {
-          value: "Unassigned"
-        },
+        customfield_10001: null,
         issuetype: {
           name: config.JIRA_CONFIG.ISSUE_TYPE
         }
